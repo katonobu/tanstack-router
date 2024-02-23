@@ -4,16 +4,20 @@ import {
   RouterProvider,
   ErrorComponent,
   createRouter,
+  createMemoryHistory 
 } from '@tanstack/react-router'
 import { auth } from './utils/auth'
 import { Spinner } from './components/Spinner'
 import { routeTree } from './routeTree.gen'
 import { useSessionStorage } from './hooks/useSessionStorage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
 //
 
 export const queryClient = new QueryClient()
+
+const memoryHistory = createMemoryHistory({
+  initialEntries: ['/'],
+})
 
 const router = createRouter({
   routeTree,
@@ -31,6 +35,7 @@ const router = createRouter({
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
+  history: memoryHistory,
 })
 
 declare module '@tanstack/react-router' {
