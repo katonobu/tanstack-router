@@ -105,3 +105,50 @@ $ npm run serve
   ➜  press h + enter to show help
 
 ```
+
+
+### GitHub page対応
+#### Node.js 20に対応する。
+```
+Node.js 16 actions are deprecated. Please update the following actions to use Node.js 20:...
+```
+[deploy-pages](https://github.com/actions/deploy-pages)をv3に変更
+[actions/upload-artifact](https://github.com/actions/upload-artifact)をv3に変更
+
+
+#### dist/assets 下ファイルが取れない。
+[Base URL](https://vite-plugin-ssr.com/base-url)
+vite.config.jsで、baseに設定する文字列を切り替える。
+```
+  base: process.env.GITHUB_PAGES
+      ? "tanstack-router"
+      : "./",
+```
+
+https://github.com/actions/deploy-pages
+
+#### dist/assets 下ファイルはとれるがNotFound表示
+[using Tanstack router with a SPA in github pages](https://stackoverflow.com/questions/77466065/using-tanstack-router-with-a-spa-in-github-pages)
+回答では、
+hash-based routing を使うとよいと書いてある。
+
+回答のサンプルコードは
+memoryHistory を使うコードになっている。
+[History Types](https://tanstack.com/router/v1/docs/framework/react/guide/history-types)
+によれば、
+- createBrowserHistory: The default history type.
+- createHashHistory: A history type that uses a hash to track history.
+- createMemoryHistory: A history type that keeps the history in memory.
+の3つがあり、
+defaultのBrowserHistoryではうまく動かない模様。
+
+src/main.tsx
+でrouterを生成する際、
+`createRouter()`のオプションで指定する。
+
+HashHistory,MemoryHistoryのいずれでもGH-Pageで動作が確認できた。
+MemoryHistoryはブラウザに表示されるURLが変化しない一方、
+HashHistoryはBaseURLの直下に/#/が挟まれルーティングURLが表示される。
+
+今回はHashHistoryにすることにした。
+
