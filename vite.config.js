@@ -5,4 +5,7 @@ import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), TanStackRouterVite()],
+  base: process.env.GITHUB_PAGES
+      ? "tanstack-router"
+      : "./",
 })
