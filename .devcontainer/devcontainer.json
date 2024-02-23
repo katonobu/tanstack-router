@@ -1,7 +1,6 @@
 {
 	"name": "Node.js",
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:dev-20-bullseye",
-	"forwardPorts": [3000,5173],
 	"postCreateCommand": "npm install",
 	"customizations": {
 		"vscode": { "extensions": ["esbenp.prettier-vscode"] }
