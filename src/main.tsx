@@ -5,7 +5,6 @@ import {
   ErrorComponent,
   createRouter,
   createHashHistory,
-  createMemoryHistory 
 } from '@tanstack/react-router'
 import { auth } from './utils/auth'
 import { Spinner } from './components/Spinner'
@@ -16,9 +15,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export const queryClient = new QueryClient()
 
-const memoryHistory = createMemoryHistory({
-  initialEntries: ['/'],
-})
 const hashHistory = createHashHistory()
 
 const router = createRouter({
@@ -37,8 +33,7 @@ const router = createRouter({
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited
   defaultPreloadStaleTime: 0,
-  history: memoryHistory,
-//  history: hashHistory
+  history: hashHistory
 })
 
 declare module '@tanstack/react-router' {
