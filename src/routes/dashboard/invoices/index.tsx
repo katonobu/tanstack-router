@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
-import { Invoice, postInvoice } from '../utils/mockTodos'
-import { InvoiceFields } from '../components/InvoiceFields'
-import { Spinner } from '../components/Spinner'
-import { useCreateInvoiceMutation } from '../utils/queryOptions'
+import { Invoice, postInvoice } from '../../../utils/mockTodos'
+import { InvoiceFields } from '../../../components/InvoiceFields'
+import { Spinner } from '../../../components/Spinner'
+import { useCreateInvoiceMutation } from '../../../utils/queryOptions'
 
 // @ts-ignore
 export const Route = createFileRoute('/dashboard/invoices/')({

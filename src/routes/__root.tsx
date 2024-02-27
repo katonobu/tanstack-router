@@ -41,7 +41,7 @@ function RootComponent() {
                 ['/expensive', 'Expensive'],
                 ['/layout-a', 'Layout A'],
                 ['/layout-b', 'Layout B'],
-                ['/profile', 'Profile'],
+                ['/auth/profile', 'Profile'],
                 ['/login', 'Login'],
               ] as const
             ).map(([to, label]) => {

@@ -6,10 +6,10 @@ import {
   createFileRoute,
   useNavigate,
 } from '@tanstack/react-router'
-import { Spinner } from '../components/Spinner'
+import { Spinner } from '../../components/Spinner'
 import { z } from 'zod'
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { usersQueryOptions } from '../utils/queryOptions'
+import { usersQueryOptions } from '../../utils/queryOptions'
 
 type UsersViewSortBy = 'name' | 'id' | 'email'
 
