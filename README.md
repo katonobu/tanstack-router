@@ -157,3 +157,10 @@ HashHistoryはBaseURLの直下に/#/が挟まれルーティングURLが表示�
 src/routes/xxx.tsx createFileRoute('/xxx') /xxxのwrapページ
 src/routes/xxx/index.tsx createFileRoute('/xxx') /xxxのメインページ
 
+## 自前のNot foundを出力する。
+`createFileRoute()`の引数オブジェクトの、
+`notFoundComponent`にNot found表示コンポーネントを設定する。
+
+## [Splat / Catch-All Routes](https://tanstack.com/router/v1/docs/framework/react/guide/route-trees#splat--catch-all-routes)
+ローダーの引数`params`のメンバー`_splat`にパスが渡される。
+Promise.resolve()して、Component側では`Route.useLoaderData()`で受け取る。
