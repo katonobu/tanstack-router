@@ -15,19 +15,19 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as DashboardImport } from './routes/dashboard'
+import { Route as AuthImport } from './routes/auth'
 import { Route as LayoutImport } from './routes/_layout'
-import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
-import { Route as DashboardIndexImport } from './routes/dashboard.index'
-import { Route as DashboardUsersImport } from './routes/dashboard.users'
-import { Route as DashboardInvoicesImport } from './routes/dashboard.invoices'
-import { Route as LayoutLayoutBImport } from './routes/_layout.layout-b'
-import { Route as LayoutLayoutAImport } from './routes/_layout.layout-a'
-import { Route as AuthProfileImport } from './routes/_auth.profile'
-import { Route as DashboardUsersIndexImport } from './routes/dashboard.users.index'
-import { Route as DashboardInvoicesIndexImport } from './routes/dashboard.invoices.index'
-import { Route as DashboardUsersUserImport } from './routes/dashboard.users.user'
-import { Route as DashboardInvoicesInvoiceIdImport } from './routes/dashboard.invoices.$invoiceId'
+import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as DashboardUsersImport } from './routes/dashboard/users'
+import { Route as DashboardInvoicesImport } from './routes/dashboard/invoices'
+import { Route as AuthProfileImport } from './routes/auth/profile'
+import { Route as LayoutLayoutBImport } from './routes/_layout/layout-b'
+import { Route as LayoutLayoutAImport } from './routes/_layout/layout-a'
+import { Route as DashboardUsersIndexImport } from './routes/dashboard/users/index'
+import { Route as DashboardInvoicesIndexImport } from './routes/dashboard/invoices/index'
+import { Route as DashboardUsersUserImport } from './routes/dashboard/users/user'
+import { Route as DashboardInvoicesInvoiceIdImport } from './routes/dashboard/invoices/$invoiceId'
 
 // Create Virtual Routes
 
@@ -45,13 +45,13 @@ const DashboardRoute = DashboardImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutRoute = LayoutImport.update({
-  id: '/_layout',
+const AuthRoute = AuthImport.update({
+  path: '/auth',
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRoute = AuthImport.update({
-  id: '/_auth',
+const LayoutRoute = LayoutImport.update({
+  id: '/_layout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -82,6 +82,11 @@ const DashboardInvoicesRoute = DashboardInvoicesImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 
+const AuthProfileRoute = AuthProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 const LayoutLayoutBRoute = LayoutLayoutBImport.update({
   path: '/layout-b',
   getParentRoute: () => LayoutRoute,
@@ -90,11 +95,6 @@ const LayoutLayoutBRoute = LayoutLayoutBImport.update({
 const LayoutLayoutARoute = LayoutLayoutAImport.update({
   path: '/layout-a',
   getParentRoute: () => LayoutRoute,
-} as any)
-
-const AuthProfileRoute = AuthProfileImport.update({
-  path: '/profile',
-  getParentRoute: () => AuthRoute,
 } as any)
 
 const DashboardUsersIndexRoute = DashboardUsersIndexImport.update({
@@ -127,12 +127,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/_auth': {
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
-    }
     '/_layout': {
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth': {
+      preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
     '/dashboard': {
@@ -143,10 +143,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/profile': {
-      preLoaderRoute: typeof AuthProfileImport
-      parentRoute: typeof AuthImport
-    }
     '/_layout/layout-a': {
       preLoaderRoute: typeof LayoutLayoutAImport
       parentRoute: typeof LayoutImport
@@ -154,6 +150,10 @@ declare module '@tanstack/react-router' {
     '/_layout/layout-b': {
       preLoaderRoute: typeof LayoutLayoutBImport
       parentRoute: typeof LayoutImport
+    }
+    '/auth/profile': {
+      preLoaderRoute: typeof AuthProfileImport
+      parentRoute: typeof AuthImport
     }
     '/dashboard/invoices': {
       preLoaderRoute: typeof DashboardInvoicesImport
@@ -194,8 +194,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  AuthRoute.addChildren([AuthProfileRoute]),
   LayoutRoute.addChildren([LayoutLayoutARoute, LayoutLayoutBRoute]),
+  AuthRoute.addChildren([AuthProfileRoute]),
   DashboardRoute.addChildren([
     DashboardInvoicesRoute.addChildren([
       DashboardInvoicesInvoiceIdRoute,

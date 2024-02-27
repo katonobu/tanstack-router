@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { userQueryOptions } from '../utils/queryOptions'
+import { userQueryOptions } from '../../../utils/queryOptions'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/dashboard/users/user')({

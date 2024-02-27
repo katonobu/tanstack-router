@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { z } from 'zod'
-import { InvoiceFields } from '../components/InvoiceFields'
+import { InvoiceFields } from '../../../components/InvoiceFields'
 import {
   invoiceQueryOptions,
   useUpdateInvoiceMutation,
-} from '../utils/queryOptions'
+} from '../../../utils/queryOptions'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/dashboard/invoices/$invoiceId')({
