@@ -152,3 +152,8 @@ HashHistoryはBaseURLの直下に/#/が挟まれルーティングURLが表示�
 
 今回はHashHistoryにすることにした。
 
+## [Directory Routes](https://tanstack.com/router/latest/docs/framework/react/guide/route-trees#directory-routes)を参考にディレクトリ構造を変更
+### xxxというディレクトリを掘る場合。
+src/routes/xxx.tsx createFileRoute('/xxx') /xxxのwrapページ
+src/routes/xxx/index.tsx createFileRoute('/xxx') /xxxのメインページ
+
