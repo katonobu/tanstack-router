@@ -9,7 +9,6 @@ import {
 import { auth } from './utils/auth'
 import { Spinner } from './components/Spinner'
 import { routeTree } from './routeTree.gen'
-import { useSessionStorage } from './hooks/useSessionStorage'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 //
 
