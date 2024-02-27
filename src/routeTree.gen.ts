@@ -19,6 +19,7 @@ import { Route as AuthImport } from './routes/auth'
 import { Route as LayoutImport } from './routes/_layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
+import { Route as FilesSplatImport } from './routes/files/$'
 import { Route as DashboardUsersImport } from './routes/dashboard/users'
 import { Route as DashboardInvoicesImport } from './routes/dashboard/invoices'
 import { Route as AuthProfileImport } from './routes/auth/profile'
@@ -70,6 +71,11 @@ const ExpensiveIndexLazyRoute = ExpensiveIndexLazyImport.update({
 const DashboardIndexRoute = DashboardIndexImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
+} as any)
+
+const FilesSplatRoute = FilesSplatImport.update({
+  path: '/files/$',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const DashboardUsersRoute = DashboardUsersImport.update({
@@ -163,6 +169,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUsersImport
       parentRoute: typeof DashboardImport
     }
+    '/files/$': {
+      preLoaderRoute: typeof FilesSplatImport
+      parentRoute: typeof rootRoute
+    }
     '/dashboard/': {
       preLoaderRoute: typeof DashboardIndexImport
       parentRoute: typeof DashboardImport
@@ -208,6 +218,7 @@ export const routeTree = rootRoute.addChildren([
     DashboardIndexRoute,
   ]),
   LoginRoute,
+  FilesSplatRoute,
   ExpensiveIndexLazyRoute,
 ])
 
