@@ -19,6 +19,9 @@ export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
   component: RootComponent,
+  notFoundComponent: () => {
+    return <p>Not found (in _root)</p>
+  },
 })
 
 function RootComponent() {
