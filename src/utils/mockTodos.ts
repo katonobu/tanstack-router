@@ -72,19 +72,17 @@ const ensureUsers = async () => {
 }
 
 export async function fetchInvoices() {
-  return loaderDelayFn(() => ensureInvoices().then(() => invoices))
+  return ensureInvoices().then(() => invoices)
 }
 
 export async function fetchInvoiceById(id: number) {
-  return loaderDelayFn(() =>
-    ensureInvoices().then(() => {
-      const invoice = invoices.find((d) => d.id === id)
-      if (!invoice) {
-        throw new Error('Invoice not found')
-      }
-      return invoice
-    }),
-  )
+  return ensureInvoices().then(() => {
+    const invoice = invoices.find((d) => d.id === id)
+    if (!invoice) {
+      throw new Error('Invoice not found')
+    }
+    return invoice
+  })
 }
 
 export async function postInvoice(partialInvoice: Partial<Invoice>) {

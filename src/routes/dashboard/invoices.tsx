@@ -22,6 +22,17 @@ function InvoicesComponent() {
   return (
     <div className="flex-1 flex">
       <div className="divide-y w-48">
+        <div key={'create_invoce_0'}>
+          <Link
+              to="/dashboard/invoices"
+              preload="intent"
+              className="block py-2 px-3 text-blue-700"
+            >
+            <pre className="text-sm">
+              #0 - Create Invoice{' '}
+            </pre>
+          </Link>
+        </div>
         {invoices?.map((invoice) => {
           return (
             <div key={invoice.id}>

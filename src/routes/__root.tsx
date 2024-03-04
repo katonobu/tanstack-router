@@ -29,7 +29,7 @@ function RootComponent() {
     <>
       <div className={`min-h-screen flex flex-col`}>
         <div className={`flex items-center border-b gap-2`}>
-          <h1 className={`text-3xl p-2`}>Kitchen Sink</h1>
+          <h1 className={`text-3xl p-2`}>Drone Log Assystant</h1>
           {/* Show a global spinner when the router is transitioning */}
           <div className={`text-3xl`}>
             <RouterSpinner />
@@ -40,12 +40,8 @@ function RootComponent() {
             {(
               [
                 ['/', 'Home'],
-                ['/dashboard', 'Dashboard'],
-                ['/expensive', 'Expensive'],
-                ['/layout-a', 'Layout A'],
-                ['/layout-b', 'Layout B'],
-                ['/auth/profile', 'Profile'],
-                ['/login', 'Login'],
+//                ['/dashboard', 'Dashboard'],
+                ['/flightAndMentenance', '日常点検記録、飛行記録'],
               ] as const
             ).map(([to, label]) => {
               return (

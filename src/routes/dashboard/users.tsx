@@ -11,13 +11,13 @@ import { z } from 'zod'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { usersQueryOptions } from '../../utils/queryOptions'
 
-type UsersViewSortBy = 'name' | 'id' | 'email'
+type UsersViewSortBy = 'name' | 'id'
 
 export const Route = createFileRoute('/dashboard/users')({
   validateSearch: z.object({
     usersView: z
       .object({
-        sortBy: z.enum(['name', 'id', 'email']).optional(),
+        sortBy: z.enum(['name', 'id']).optional(),
         filterBy: z.string().optional(),
       })
       .optional(),
@@ -108,7 +108,7 @@ function UsersComponent() {
             onChange={(e) => setSortBy(e.target.value as UsersViewSortBy)}
             className="flex-1 border p-1 px-2 rounded"
           >
-            {['name', 'id', 'email'].map((d) => {
+            {['name', 'id'].map((d) => {
               return <option key={d} value={d} children={d} />
             })}
           </select>
