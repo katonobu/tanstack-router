@@ -18,6 +18,8 @@ import { Route as FlightAndMentenanceIndexImport } from './routes/flightAndMente
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as FlightAndMentenanceRegistMentenanceImport } from './routes/flightAndMentenance/registMentenance'
 import { Route as FlightAndMentenanceRegistFlightImport } from './routes/flightAndMentenance/registFlight'
+import { Route as FlightAndMentenanceMentenanceViewImport } from './routes/flightAndMentenance/mentenanceView'
+import { Route as FlightAndMentenanceFlightViewImport } from './routes/flightAndMentenance/flightView'
 import { Route as DashboardUsersImport } from './routes/dashboard/users'
 import { Route as DashboardInvoicesImport } from './routes/dashboard/invoices'
 import { Route as DashboardUsersIndexImport } from './routes/dashboard/users/index'
@@ -61,6 +63,18 @@ const FlightAndMentenanceRegistMentenanceRoute =
 const FlightAndMentenanceRegistFlightRoute =
   FlightAndMentenanceRegistFlightImport.update({
     path: '/registFlight',
+    getParentRoute: () => FlightAndMentenanceRoute,
+  } as any)
+
+const FlightAndMentenanceMentenanceViewRoute =
+  FlightAndMentenanceMentenanceViewImport.update({
+    path: '/mentenanceView',
+    getParentRoute: () => FlightAndMentenanceRoute,
+  } as any)
+
+const FlightAndMentenanceFlightViewRoute =
+  FlightAndMentenanceFlightViewImport.update({
+    path: '/flightView',
     getParentRoute: () => FlightAndMentenanceRoute,
   } as any)
 
@@ -120,6 +134,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUsersImport
       parentRoute: typeof DashboardImport
     }
+    '/flightAndMentenance/flightView': {
+      preLoaderRoute: typeof FlightAndMentenanceFlightViewImport
+      parentRoute: typeof FlightAndMentenanceImport
+    }
+    '/flightAndMentenance/mentenanceView': {
+      preLoaderRoute: typeof FlightAndMentenanceMentenanceViewImport
+      parentRoute: typeof FlightAndMentenanceImport
+    }
     '/flightAndMentenance/registFlight': {
       preLoaderRoute: typeof FlightAndMentenanceRegistFlightImport
       parentRoute: typeof FlightAndMentenanceImport
@@ -171,6 +193,8 @@ export const routeTree = rootRoute.addChildren([
     DashboardIndexRoute,
   ]),
   FlightAndMentenanceRoute.addChildren([
+    FlightAndMentenanceFlightViewRoute,
+    FlightAndMentenanceMentenanceViewRoute,
     FlightAndMentenanceRegistFlightRoute,
     FlightAndMentenanceRegistMentenanceRoute,
     FlightAndMentenanceIndexRoute,

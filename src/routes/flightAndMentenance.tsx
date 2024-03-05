@@ -17,6 +17,8 @@ function DashboardComponent() {
             ['/flightAndMentenance', '日常点検記録/飛行記録', true],
             ['/flightAndMentenance/registMentenance', '日常点検記録の入力'],
             ['/flightAndMentenance/registFlight', '飛行記録の入力'],
+            ['/flightAndMentenance/mentenanceView', '日常点検記録の表示'],
+            ['/flightAndMentenance/flightView', '飛行記録の表示']
           ] as const
         ).map(([to, label, exact]) => {
           return (

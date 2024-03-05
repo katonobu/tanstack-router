@@ -92,6 +92,18 @@
 ## [jsPDF・html2canvasで動的なデータのPDF出力機能を作った話](https://zenn.dev/kamegoro/articles/62fb89f36355fa)
 ## [Laravel + React ブラウザだけでPDF をつくる](https://blog.capilano-fw.com/?p=11213)
 
+# GoogleSheetをjsonで取得
+- [【Google Sheets API】 スプレッドシートのデータをJSONで取得する](https://notes.sharesl.net/articles/2541/)
+- [Google Sheets APIを使う](https://zenn.dev/joo_hashi/articles/273b10943e044b)
+  - [curlを使用してリファラを設定する方法](https://tech-hint.hatenablog.com/entry/2024/02/14/104515#:~:text=%E3%83%AA%E3%83%95%E3%82%A1%E3%83%A9%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95,%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%BE%E3%81%99%E3%80%82)
+```
+curl -X GET -e "http://localhost:3001/" "https://sheets.googleapis.com/v4/spreadsheets/1DWY_19g94UQaPILQEvnA9PHV9nY4TWHMEbqecN6_b2g/values/sheet?key=AIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+curl -X GET -e "http://localhost:3001/" "https://sheets.googleapis.com/v4/spreadsheets/1L6cVXyWl7QblXpyJjK9ZUis8XV9suGhSaAMkyEQjY3k/values/sheet?key=AIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+```
+- [posObjs is not definedは it does not seem to cause any problems with actual performance.](https://hellotumo.com/typings/how-to-guides/how-to-embed-specific-cells-when-embedding-a-google-spreadsheet/)
+
+- [GitHubのActions用にAPIキーを登録する](https://zenn.dev/ameyo/articles/9bff066c0402d3)
 
 # アプリケーションイメージ
 ## Ver 0.1.0

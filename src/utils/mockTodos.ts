@@ -3,6 +3,13 @@ import { match } from 'assert'
 import axios from 'axios'
 import { produce } from 'immer'
 import { actionDelayFn, loaderDelayFn, shuffle } from './utils'
+
+export type Sheets = {
+  range:string
+  majorDimension:string
+  values:string[][]
+}
+
 export type Invoice = {
   id: number
   title: string
@@ -166,4 +173,46 @@ export async function fetchRandomNumber() {
   return loaderDelayFn(() => {
     return Math.random()
   })
+}
+
+
+let mentenance: Sheets
+let mentenancePromise: Promise<void>
+
+const ensureMentenance = async () => {
+  if (!mentenancePromise) {
+    mentenancePromise = Promise.resolve().then(async () => {
+      const { data } = await axios.get(
+        `https://sheets.googleapis.com/v4/spreadsheets/${import.meta.env.VITE_MENTENANCE_SHEET_ID}/values/${import.meta.env.VITE_MENTENANCE_SHEET_NAME}?key=${import.meta.env.VITE_GOOGLE_SHEET_API_KEY}`,
+      )
+      mentenance = data
+    })
+  }
+
+  await mentenancePromise
+}
+
+export async function fetchMentenance () {
+  return ensureMentenance().then(()=> mentenance)
+}
+
+let flight: Sheets
+let flightPromise: Promise<void>
+
+const ensureFlight = async () => {
+  if (!flightPromise) {
+    flightPromise = Promise.resolve().then(async () => {
+      console.log("ensureFlight")
+      const { data } = await axios.get(
+        `https://sheets.googleapis.com/v4/spreadsheets/${import.meta.env.VITE_FLIGHT_SHEET_ID}/values/${import.meta.env.VITE_FLIGHT_SHEET_NAME}?key=${import.meta.env.VITE_GOOGLE_SHEET_API_KEY}`,
+      )
+      flight = data
+    })
+  }
+
+  await flightPromise
+}
+
+export async function fetchFlight () {
+  return ensureFlight().then(()=> flight)
 }
