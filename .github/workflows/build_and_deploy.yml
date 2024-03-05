@@ -9,6 +9,11 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  VITE_GOOGLE_SHEET_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
+  VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
+  VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
+
 jobs:
   # Build job
   build:
@@ -16,6 +21,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: dump env
+      run: env
+
     - name: Checkout
       uses: actions/checkout@v4
 
@@ -27,21 +35,10 @@ jobs:
     - name: Install NPM packages
       run: npm ci
 
-    - name: test env
-      run: env
-      env:
-        CI: true
-        VITE_GOOGLE_SHEET_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
-        VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
-        VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
-
     - name: Build
       run: npm run build
       env:
         CI: true
-        VITE_GOOGLE_SHEET_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
-        VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
-        VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
 
     - name: Upload artifacts
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
