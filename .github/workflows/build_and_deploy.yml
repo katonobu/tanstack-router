@@ -29,9 +29,9 @@ jobs:
 
     - name: Setup ENV
       run: |
-        echo "VITE_GOOGLE_SHEET_API_KEY=${{secrets.VITE_GOOGLE_SHEET_API_KEY}}" >> $GITHUB_ENV
-        echo "VITE_MENTENANCE_SHEET_ID=${{secrets.VITE_MENTENANCE_SHEET_ID}}" >> $GITHUB_ENV
-        echo "VITE_MENTENANCE_SHEET_NAME=${{secrets.VITE_MENTENANCE_SHEET_NAME}}" >> $GITHUB_ENV
+        echo "VITE_GOOGLE_SHEET_API_KEY=" ${{secrets.VITE_GOOGLE_SHEET_API_KEY}} >> $GITHUB_ENV
+        echo "VITE_MENTENANCE_SHEET_ID=" ${{secrets.VITE_MENTENANCE_SHEET_ID}} >> $GITHUB_ENV
+        echo "VITE_MENTENANCE_SHEET_NAME=" ${{secrets.VITE_MENTENANCE_SHEET_NAME}} >> $GITHUB_ENV
 
     - name: Build
       run: npm run build
