@@ -31,8 +31,11 @@ jobs:
       run: npm run build
       env:
         CI: true
+      env:
         VITE_GOOGLE_SHEET_API_KEY: ${{secrets.VITE_GOOGLE_SHEET_API_KEY}}
+      env:
         VITE_MENTENANCE_SHEET_ID: ${{secrets.VITE_MENTENANCE_SHEET_ID}}
+      env:
         VITE_MENTENANCE_SHEET_NAME: ${{secrets.VITE_MENTENANCE_SHEET_NAME}}
 
     - name: Upload artifacts
