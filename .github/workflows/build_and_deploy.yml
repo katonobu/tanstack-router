@@ -27,20 +27,13 @@ jobs:
     - name: Install NPM packages
       run: npm ci
 
-    - name: Setup ENV
-      run: |
-        echo "VITE_GOOGLE_SHEET_API_KEY=$VITE_GOOGLE_SHEET_API_KEY"
-        echo "VITE_MENTENANCE_SHEET_ID=$VITE_MENTENANCE_SHEET_ID"
-        echo "VITE_MENTENANCE_SHEET_NAME=$VITE_MENTENANCE_SHEET_NAME"
-      env:
-        VITE_GOOGLE_SHEET_API_KEY:${{secrets.VITE_GOOGLE_SHEET_API_KEY}}
-        VITE_MENTENANCE_SHEET_ID:${{secrets.VITE_MENTENANCE_SHEET_ID}}
-        VITE_MENTENANCE_SHEET_NAME:${{secrets.VITE_MENTENANCE_SHEET_NAME}}
-
     - name: Build
       run: npm run build
       env:
         CI: true
+        VITE_GOOGLE_SHEET_API_KEY: ${{secrets.VITE_GOOGLE_SHEET_API_KEY}}
+        VITE_MENTENANCE_SHEET_ID: ${{secrets.VITE_MENTENANCE_SHEET_ID}}
+        VITE_MENTENANCE_SHEET_NAME: ${{secrets.VITE_MENTENANCE_SHEET_NAME}}
 
     - name: Upload artifacts
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
