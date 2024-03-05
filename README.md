@@ -1,166 +1,208 @@
-# tanstack-router
-## init
-copy from [git hub router/examples/react/kitchen-sink-react-query-file-based/](https://github.com/TanStack/router/tree/main/examples/react/kitchen-sink-react-query-file-based)
+# ドローン運行アシスト
+- [無人航空機の飛行日誌の取扱要領](https://www.mlit.go.jp/koku/content/001574394.pdf)
+- [リモート ID 機器等及びアプリケーションが備えるべき要件](https://www.mlit.go.jp/koku/content/001444589.pdf)
 
-## init_mentenance
-### EMS明示
-`npm run dev` すると、
-`The CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.`
-が出る。
-package.jsonに、
+## 登場人物
+- グループ
+- ユーザー
+- 機体
+- アクティビティ
+
+### グループ
+- グループID
+- 名称
+- 機体リスト
+- ユーザーリスト
+- 登録年月日
+- 削除年月日
+
+### ユーザー
+- ユーザーId
+- 氏名
+- 資格情報
+- 登録年月日
+- 削除年月日
+
+### 機体
+- 機体Id
+- 機体名称
+- 登録年月日
+- 削除年月日
+
+### アクティビティ
+- ユーザー登録
+- 機体登録
+- 無人航空機の日常点検記録
+- 無人航空機の飛行記録
+- 点検整備
+
+## 無人航空機の飛行記録 JOURNEY LOG OF UAS
+- 無人航空機の登録記号 REGISTRATION ID OF UAS
+- 飛行記録 JOURNEY LOG
+  - 飛行年月日 FLIGHT DATE
+  - 飛行させた者の氏名 NAME OF PILOT
+  - 飛行概要 NATURE OF FLIGHT
+  - 離陸場所 FROM
+  - 着陸場所 TO
+  - 離陸時刻 OFF TIME
+  - 着陸時刻 ON TIME
+  - 飛行時間 FLIGHT TIME
+  - 総飛行時間 TOTAL FLIGHT TIME
+  - 飛行の安全に影響のあった事項 MATTERS AFFECTED FLIGHT SAFETY
+- 記事 REPORT
+  - 発生年月日 SQUAWK DATE
+  - 不具合事項 FLIGHT SQUAWK
+  - 処置年月日 ACTION DATE
+  - 処置その他 CORRECTIVE ACTION
+  - 確認者 CONFIRMER
+
+## 無人航空機の日常点検記録 DAILY INSPECTION RECORD OF UAS
+- 機体全般 UAS GENERAL
+- プロペラ PROPELLER(S)
+- フレーム FLAME
+- 通信系統 COMMUNICATION SYSTEM
+- 推進系統 PROPULSION SYSTEM
+- 電源系統 POWER SYSTEM
+- 自動制御系統 AUTOMATIC CONTROL SYSTEM
+- 操縦装置 FLIGHT CONTROL SYSTEM
+- バッテリー、燃料 BATTERY, FUEL 
+
+- 特記事項 NOTES
+- 実施場所 PLACE 
+- 実施年月日 DATE
+- 実施者 INSPECTOR
+
+## 無人航空機の点検整備記録 INSPECTION AND MAINTENANCE RECORD OF UAS
+
+- 実施年月日 DATE
+- 総飛行時間 TOTAL FLIGHT TIME
+- 点検、修理、改造及び整備の内容 DETAIL
+- 実施理由 REASON
+- 実施場所 PLACE
+- 実施者 ENGINEER
+- 備考 REMARKS
+
+# 印刷関係
+## [JSpdf](https://raw.githack.com/MrRio/jsPDF/master/docs/index.html)
+## [ついに、Webアプリでの帳票印刷のベストプラクティスを編み出しました](https://zenn.dev/ttskch/articles/1f1572cfd2e375)
+- svgで生成しておき、svgの中の文字列を入れ替えてから印刷させる
+## [JavaScriptでPDF出力を実装する方法](https://www.migaro.co.jp/tips/2386/)
+- pdfに対して一座標指定で文字を設定する。
+## [jsPDFで日本語対応したPDFを作成する方法（テーブルもあり）](https://qiita.com/niyu1103/items/ed4941ddc7689df771dd)
+## [jsPDF・html2canvasで動的なデータのPDF出力機能を作った話](https://zenn.dev/kamegoro/articles/62fb89f36355fa)
+## [Laravel + React ブラウザだけでPDF をつくる](https://blog.capilano-fw.com/?p=11213)
+
+# GoogleSheetをjsonで取得
+- [【Google Sheets API】 スプレッドシートのデータをJSONで取得する](https://notes.sharesl.net/articles/2541/)
+- [Google Sheets APIを使う](https://zenn.dev/joo_hashi/articles/273b10943e044b)
+  - [curlを使用してリファラを設定する方法](https://tech-hint.hatenablog.com/entry/2024/02/14/104515#:~:text=%E3%83%AA%E3%83%95%E3%82%A1%E3%83%A9%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95,%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%BE%E3%81%99%E3%80%82)
 ```
-  "type": "module",
-```
-行を追加。
-### tailwindoのインストール
-ブラウザコンソールに下記警告が出る。
-```
-cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation
-```
-[Get started with Tailwind CSS](https://tailwindcss.com/docs/installation) を参考に修正。
-#### Install Tailwind CSS
-[Using ESM or TypeScript](https://tailwindcss.com/docs/configuration#using-esm-or-type-script)
-`tailwindcss init`に--tsオプションを付ける。
-```
-npm install -D tailwindcss
-npx tailwindcss init --ts
-```
-
-#### Configure your template paths
-tailwind.config.ts
-contentsの中身が空っぽなので適切なパスを指定する。
-ts,tsxを追加する。
-```
-  content: ["./src/**/*.{html,js,ts,tsx}"],
-```
-
-#### Add the Tailwind directives to your CSS
-`src/input.css`を新規作成
-```
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
-
-#### Start the Tailwind CLI build process
-参照する.cssファイルを作る
---watch を付けるとinput.cssの変化に応じてoutput.cssを作るらしいが、今回は--watchなしにしておく。
-```
-$ npx tailwindcss --help
-
-tailwindcss v3.4.1
-
-Usage:
-   tailwindcss [--input input.css] [--output output.css] [--watch] [options...]
-   tailwindcss init [--full] [--postcss] [options...]
-
-Commands:
-   init [options]
-
-Options:
-   -i, --input              Input file
-   -o, --output             Output file
-   -w, --watch              Watch for changes and rebuild as needed
-   -p, --poll               Use polling instead of filesystem events when watching
-       --content            Content paths to use for removing unused classes
-       --postcss            Load custom PostCSS configuration
-   -m, --minify             Minify the output
-   -c, --config             Path to a custom config file
-       --no-autoprefixer    Disable autoprefixer
-   -h, --help               Display usage information
-
-$ npx tailwindcss -i ./src/input.css -o ./src/output.css
-```
-
-#### 動作確認
-- 5173ポートを開いてcssが当たってることを確認
-- buildしてもcssが当たってることを確認
-```
-$ npm run build
-
-> tanstack-router-react-example-kitchen-sink-react-query-file-based@0.0.0 build
-> vite build
-
-
-♻️  Generating routes...
-✅ Processed routes in 992ms
-vite v5.1.3 building for production...
-✓ 200 modules transformed.
-dist/index.html                       0.41 kB │ gzip:   0.27 kB
-dist/assets/index-BhtsJyLr.css        9.23 kB │ gzip:   2.58 kB
-dist/assets/index.lazy-jS0YFBSc.js    0.25 kB │ gzip:   0.22 kB
-dist/assets/index-CkI-Wx_1.js       356.59 kB │ gzip: 111.24 kB
-✓ built in 12.86s
-
-$ npm run serve
-
-> tanstack-router-react-example-kitchen-sink-react-query-file-based@0.0.0 serve
-> vite preview
-
-
-♻️  Generating routes...
-✅ Processed routes in 1082ms
-  ➜  Local:   http://localhost:4173/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
+curl -X GET -e "http://localhost:3001/" "https://sheets.googleapis.com/v4/spreadsheets/1DWY_19g94UQaPILQEvnA9PHV9nY4TWHMEbqecN6_b2g/values/sheet?key=AIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+curl -X GET -e "http://localhost:3001/" "https://sheets.googleapis.com/v4/spreadsheets/1L6cVXyWl7QblXpyJjK9ZUis8XV9suGhSaAMkyEQjY3k/values/sheet?key=AIxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 ```
+- [posObjs is not definedは it does not seem to cause any problems with actual performance.](https://hellotumo.com/typings/how-to-guides/how-to-embed-specific-cells-when-embedding-a-google-spreadsheet/)
 
+- [GitHubのActions用にAPIキーを登録する](https://zenn.dev/ameyo/articles/9bff066c0402d3)
 
-### GitHub page対応
-#### Node.js 20に対応する。
+# アプリケーションイメージ
+## Ver 0.1.0
+- データはlocal.strageに保存
+- 飛行記録を容易に記録できる。
+- フライト画面
+  - 1ボタン
+    - 状態に応じて飛行開始/飛行終了ボタン
+  - 飛行中の経過時間が表示される。
+- 保存記録のexportが可能
+
+## Ver 0.1.1
+- 保存記録のimportが可能
+- 設定画面
+  - グループIdは決め打ちハードコード。1つしか持てない。
+  - 機体Idは初期値ハードコード、変更可能。1つしか持てない。
+  - ユーザーIdは初期値ハードコード、変更可能。1つしか持てない。
+
+## Ver 0.1.2
+- 記録の参照が可能。
+- ユーザーフライト一覧表示
+
+## Ver 0.1.3
+- 記録の変更が可能。
+- ユーザーフライト一覧でダブルクリックすることで変更可能。
+
+## Ver 0.1.4
+- 記録の印刷が可能。
+- 国交省のpdfをテンプレートにpdf出力させる。
+
+## Ver 0.2.0
+- 点検記録も残せる。
+- フライト画面(日常点検)
+  - 日常点検記録入力画面完了後、フライト開始/終了画面に遷移。
+  - 飛行開始待ち状態のとき、フライト終了ボタン押下可能。
+  - 日常点検記録入力画面(フライト後)に遷移。
+- 定期点検画面
+
+## Ver 0.3.0
+複数ユーザー対応
+複数機体対応
+複数グループ対応
 ```
-Node.js 16 actions are deprecated. Please update the following actions to use Node.js 20:...
+{
+  'groupes':[
+    {
+      'groupId':number,
+      'name':string,
+      'uas'[
+      ],
+      'users':[
+      ],
+      'registAt':string,
+      'deleteAt':string,
+    }
+  ],
+  'uas':[
+    {
+      'uaId':number,
+      'registratedId':string,
+      'name':string,
+      'registAt':string,
+      'deleteAt':string,
+    }
+  ],
+  'users':[
+    {
+      'userId':number, // 1000以降を一般ユーザーとして使う
+      'name':string,
+      'registAt':string,
+      'deleteAt':string
+    }
+  ]
+  'actions':[
+    {
+      'actionId':number,
+      'userId':number,
+      'type':[
+        {add,modiry,del}x{group,user,ua,record}
+      ]
+      'action':{}
+    }
+  ],
+  'records':[
+    {
+      'recordId':number,
+      'uaId'number,
+      'userId':number,
+      'type':[
+        'journey',
+        'report',
+        'inspection',
+        'mentenance',
+      ],
+      'record':{},
+      'actionHistory':[
+
+      ]
+    }
+  ]
+}
 ```
-[deploy-pages](https://github.com/actions/deploy-pages)をv3に変更
-[actions/upload-artifact](https://github.com/actions/upload-artifact)をv3に変更
-
-
-#### dist/assets 下ファイルが取れない。
-[Base URL](https://vite-plugin-ssr.com/base-url)
-vite.config.jsで、baseに設定する文字列を切り替える。
-```
-  base: process.env.GITHUB_PAGES
-      ? "tanstack-router"
-      : "./",
-```
-
-https://github.com/actions/deploy-pages
-
-#### dist/assets 下ファイルはとれるがNotFound表示
-[using Tanstack router with a SPA in github pages](https://stackoverflow.com/questions/77466065/using-tanstack-router-with-a-spa-in-github-pages)
-回答では、
-hash-based routing を使うとよいと書いてある。
-
-回答のサンプルコードは
-memoryHistory を使うコードになっている。
-[History Types](https://tanstack.com/router/v1/docs/framework/react/guide/history-types)
-によれば、
-- createBrowserHistory: The default history type.
-- createHashHistory: A history type that uses a hash to track history.
-- createMemoryHistory: A history type that keeps the history in memory.
-の3つがあり、
-defaultのBrowserHistoryではうまく動かない模様。
-
-src/main.tsx
-でrouterを生成する際、
-`createRouter()`のオプションで指定する。
-
-HashHistory,MemoryHistoryのいずれでもGH-Pageで動作が確認できた。
-MemoryHistoryはブラウザに表示されるURLが変化しない一方、
-HashHistoryはBaseURLの直下に/#/が挟まれルーティングURLが表示される。
-
-今回はHashHistoryにすることにした。
-
-## [Directory Routes](https://tanstack.com/router/latest/docs/framework/react/guide/route-trees#directory-routes)を参考にディレクトリ構造を変更
-### xxxというディレクトリを掘る場合。
-src/routes/xxx.tsx createFileRoute('/xxx') /xxxのwrapページ
-src/routes/xxx/index.tsx createFileRoute('/xxx') /xxxのメインページ
-
-## 自前のNot foundを出力する。
-`createFileRoute()`の引数オブジェクトの、
-`notFoundComponent`にNot found表示コンポーネントを設定する。
-
-## [Splat / Catch-All Routes](https://tanstack.com/router/v1/docs/framework/react/guide/route-trees#splat--catch-all-routes)
-ローダーの引数`params`のメンバー`_splat`にパスが渡される。
-Promise.resolve()して、Component側では`Route.useLoaderData()`で受け取る。

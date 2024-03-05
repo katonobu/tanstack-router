@@ -6,6 +6,8 @@ import {
   fetchUsers,
   patchInvoice,
   postInvoice,
+  fetchMentenance,
+  fetchFlight,
 } from './mockTodos'
 
 import { queryClient } from '../main'
@@ -53,3 +55,15 @@ export const useUpdateInvoiceMutation = (invoiceId: number) => {
     gcTime: 1000 * 10,
   })
 }
+
+export const mentenanceQueryOptions = () =>
+  queryOptions({
+    queryKey: ['mentenance'],
+    queryFn: () => fetchMentenance(),
+  })
+
+export const flightQueryOptions = () =>
+  queryOptions({
+    queryKey: ['flight'],
+    queryFn: () => fetchFlight(),
+  })
