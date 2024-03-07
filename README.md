@@ -82,6 +82,11 @@
 - 実施者 ENGINEER
 - 備考 REMARKS
 
+# REACTでPDFを表示
+[【React】「React-PDF」ライブラリを使ってWebページにPDFを表示する](https://cpoint-lab.co.jp/article/202204/22645/)
+[wojtekmaj/react-pdf](https://github.com/wojtekmaj/react-pdf)
+- workerを動かさないとロードに失敗する。
+
 # 印刷関係
 ## [JSpdf](https://raw.githack.com/MrRio/jsPDF/master/docs/index.html)
 ## [ついに、Webアプリでの帳票印刷のベストプラクティスを編み出しました](https://zenn.dev/ttskch/articles/1f1572cfd2e375)
