@@ -8,7 +8,7 @@ import {pdfjs} from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
-const pdfUrl = new URL('../../pdfs/dailyinspection.pdf', import.meta.url).href
+const pdfUrl = new URL('../../pdfs/dailyInspection.pdf', import.meta.url).href
 
 export const Route = createFileRoute('/flightAndMentenance/mentenanceView')({
 //    loader: (opts) =>
