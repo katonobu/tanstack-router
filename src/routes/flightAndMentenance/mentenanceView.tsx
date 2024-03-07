@@ -11,14 +11,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 const pdfUrl = new URL('../../pdfs/dailyinspection.pdf', import.meta.url).href
 
 export const Route = createFileRoute('/flightAndMentenance/mentenanceView')({
-    loader: (opts) =>
-        opts.context.queryClient.ensureQueryData(mentenanceQueryOptions()),
+//    loader: (opts) =>
+//        opts.context.queryClient.ensureQueryData(mentenanceQueryOptions()),
     component:MentenanceViewComponent
 })
 
 function MentenanceViewComponent() {
-    const mentenanceQuery = useSuspenseQuery(mentenanceQueryOptions())
-    console.log(mentenanceQuery.data)
+//    const mentenanceQuery = useSuspenseQuery(mentenanceQueryOptions())
+//    console.log(mentenanceQuery.data)
 
     console.log(pdfUrl)
     return <Document file={pdfUrl}>
