@@ -2,40 +2,6 @@
 - [無人航空機の飛行日誌の取扱要領](https://www.mlit.go.jp/koku/content/001574394.pdf)
 - [リモート ID 機器等及びアプリケーションが備えるべき要件](https://www.mlit.go.jp/koku/content/001444589.pdf)
 
-## 登場人物
-- グループ
-- ユーザー
-- 機体
-- アクティビティ
-
-### グループ
-- グループID
-- 名称
-- 機体リスト
-- ユーザーリスト
-- 登録年月日
-- 削除年月日
-
-### ユーザー
-- ユーザーId
-- 氏名
-- 資格情報
-- 登録年月日
-- 削除年月日
-
-### 機体
-- 機体Id
-- 機体名称
-- 登録年月日
-- 削除年月日
-
-### アクティビティ
-- ユーザー登録
-- 機体登録
-- 無人航空機の日常点検記録
-- 無人航空機の飛行記録
-- 点検整備
-
 ## 無人航空機の飛行記録 JOURNEY LOG OF UAS
 - 無人航空機の登録記号 REGISTRATION ID OF UAS
 - 飛行記録 JOURNEY LOG
@@ -92,8 +58,7 @@
 ## [jsPDF・html2canvasで動的なデータのPDF出力機能を作った話](https://zenn.dev/kamegoro/articles/62fb89f36355fa)
 ## [Laravel + React ブラウザだけでPDF をつくる](https://blog.capilano-fw.com/?p=11213)
 
-
-# アプリケーションイメージ
+# アプリケーションリリースプラン
 ## Ver 0.1.0
 - データはlocal.strageに保存
 - 飛行記録を容易に記録できる。
@@ -134,18 +99,21 @@
 複数ユーザー対応
 複数機体対応
 複数グループ対応
+
+## Ver 1.0.0
+データベースに永続的にデータを保存
+
+# データ構造
 ```
 {
   'groupes':[
     {
       'groupId':number,
       'name':string,
-      'uas'[
-      ],
-      'users':[
-      ],
-      'registAt':string,
-      'deleteAt':string,
+      'uas'[uaId],
+      'users':[userId],
+      'registAt':actionId,
+      'deleteAt':actionId,
     }
   ],
   'uas':[
@@ -153,16 +121,25 @@
       'uaId':number,
       'registratedId':string,
       'name':string,
-      'registAt':string,
-      'deleteAt':string,
+      'totalFlightTime':number,
+      'lastFlightUpdate':actionId,
+      'lastMentenaceAt':actionid,
+      'registAt':actionId,
+      'deleteAt':actionId,
     }
   ],
   'users':[
     {
       'userId':number, // 1000以降を一般ユーザーとして使う
       'name':string,
-      'registAt':string,
-      'deleteAt':string
+      'places':[
+        {
+          'name':string,
+          'loc':{'lon','lat'}
+        }
+      ],
+      'registAt':actionId,
+      'deleteAt':actionId
     }
   ]
   'actions':[
@@ -187,10 +164,31 @@
         'mentenance',
       ],
       'record':{},
-      'actionHistory':[
-
+      'history':[
+        actionId
       ]
     }
   ]
 }
 ```
+# GUI構造
+- __root
+  - 新規登録
+  - 履歴参照
+  - 設定
+- index
+  - 各リンクの説明
+- createRecords
+  - New inspection
+  - New journey
+  - New Mentenance
+  - Import from file
+- View
+  - journy
+  - report
+  - inspection
+  - mentenance
+- Settings
+  - Group
+  - UA
+  - ユーザー 
