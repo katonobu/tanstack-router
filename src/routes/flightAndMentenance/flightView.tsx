@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Document, Page } from 'react-pdf';
 import { createFileRoute } from '@tanstack/react-router'
-import { flightQueryOptions } from '../../utils/queryOptions'
+import { flightPdfQueryOptions } from '../../utils/queryOptions'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.js?url';
 import {pdfjs} from "react-pdf";
@@ -12,23 +12,31 @@ pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const pdfUrl = new URL('../../pdfs/journeylog.pdf', import.meta.url).href
 
-const addText = async (url:string):Promise<Uint8Array> => {
-    // https://pdf-lib.js.org/
-    const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
+const getYyyyMmDdStrFromDate = (date:Date) => {
+    const y = date.getFullYear()
+    const m = ("00" + (date.getMonth()+1)).slice(-2)
+    const d = ("00" + date.getDate()).slice(-2)
+    return `${y}/${m}/${d}`
+}
 
-    const pdfDoc = await PDFDocument.load(existingPdfBytes)
+const addText = async (/*inPdfBytes:ArrayBuffer*/):Promise<Uint8Array> => {
+    // https://pdf-lib.js.org/
+//const addText = async (url:string):Promise<Uint8Array> => {
+    const inPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer())
+    const pdfDoc = await PDFDocument.load(inPdfBytes)
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
   
     const pages = pdfDoc.getPages()
     const firstPage = pages[0]
     const { width, height } = firstPage.getSize()    
+    const now = new Date()
 
     const txtPosSizes = [
-        {text:"REGISTRATION", x:0.135, y:0.215, size:12},
+        {text:"LACIERO-kato", x:0.135, y:0.215, size:12},
         {text:"9999", x:0.14, y:0.88, size:10},
-        {text:"2024/12/31", x:0.27, y:0.073, size:9},
+        {text:getYyyyMmDdStrFromDate(now), x:0.27, y:0.073, size:9},
         {text:"FlightSafty", x:0.7, y:0.775, size:12},
-        {text:"2024/12/31", x:0.77, y:0.105, size:9},
+        {text:getYyyyMmDdStrFromDate(now), x:0.77, y:0.103, size:9},
         {text:"Confirmed", x:0.89, y:0.844, size:10}
     ]
 
@@ -63,19 +71,23 @@ const addText = async (url:string):Promise<Uint8Array> => {
 }
 
 export const Route = createFileRoute('/flightAndMentenance/flightView')({
-//    loader: (opts) =>
-//        opts.context.queryClient.ensureQueryData(flightQueryOptions()),
+    loader: (opts) =>
+        opts.context.queryClient.ensureQueryData(flightPdfQueryOptions()),
     component:FlightViewComponent
 })
 
 function FlightViewComponent() {
+    const flightQuery = useSuspenseQuery(flightPdfQueryOptions())
+    console.log(flightQuery.data.sheet)
+
     const [pdfBytes, setPdfBytes] = useState<Uint8Array|null>(null)
     useEffect(()=>{
-        addText(pdfUrl).then((pdfBytes)=>setPdfBytes(pdfBytes))
+//        addText(pdfUrl).then((pdfBytes)=>setPdfBytes(pdfBytes))
+//        const inPdfBytes = flightQuery.data.pdf
+        addText(/*inPdfBytes*/).then((pdfBytes)=>setPdfBytes(pdfBytes))
+//        setPdfBytes(new Uint8Array(flightQuery.data.pdf))
         return ()=>setPdfBytes(null)
-    }, [])
-//    const flightQuery = useSuspenseQuery(flightQueryOptions())
-//    console.log(flightQuery.data)
+    }, [/*flightQuery*/])
     console.log(pdfUrl)
     return (
         pdfBytes?

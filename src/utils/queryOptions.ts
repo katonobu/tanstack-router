@@ -8,6 +8,7 @@ import {
   postInvoice,
   fetchMentenance,
   fetchFlight,
+  fetchFlightPdf
 } from './mockTodos'
 
 import { queryClient } from '../main'
@@ -66,4 +67,10 @@ export const flightQueryOptions = () =>
   queryOptions({
     queryKey: ['flight'],
     queryFn: () => fetchFlight(),
+  })
+
+export const flightPdfQueryOptions = () =>
+  queryOptions({
+    queryKey: ['flightPdf'],
+    queryFn: () => fetchFlightPdf(),
   })

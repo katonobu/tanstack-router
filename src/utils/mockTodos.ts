@@ -216,3 +216,27 @@ const ensureFlight = async () => {
 export async function fetchFlight () {
   return ensureFlight().then(()=> flight)
 }
+
+let flightPdf: {sheet:Sheets,pdf:ArrayBuffer}
+let flightPdfPromise: Promise<void>
+
+const ensureFlightPdf = async () => {
+  if (!flightPdfPromise) {
+    const pdfUrl = new URL('../../pdfs/journeylog.pdf', import.meta.url).href
+    flightPdfPromise = Promise.resolve().then(async () => {
+      const [{ data:sheetData } , res] = await Promise.all([
+        axios.get(
+          `https://sheets.googleapis.com/v4/spreadsheets/${import.meta.env.VITE_FLIGHT_SHEET_ID}/values/${import.meta.env.VITE_FLIGHT_SHEET_NAME}?key=${import.meta.env.VITE_GOOGLE_SHEET_API_KEY}`,
+        ),
+        fetch(pdfUrl),
+      ])
+      flightPdf = {sheet:sheetData, pdf:res.arrayBuffer()}
+    })
+  }
+
+  await flightPdfPromise
+}
+
+export async function fetchFlightPdf () {
+  return ensureFlightPdf().then(()=> flightPdf)
+}
