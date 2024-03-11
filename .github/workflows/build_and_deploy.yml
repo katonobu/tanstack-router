@@ -9,10 +9,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
-  VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
-
 jobs:
   # Build job
   build:
@@ -35,7 +31,9 @@ jobs:
       run: npm run build
       env:
         CI: true
-        VITE_G_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
+        VITE_G_API_KEY: ${{ secrets.VITE_G_API_KEY }}
+        VITE_MS_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
+        VITE_MS_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
         VITE_API_KEY: ABC123
 
     - name: Upload artifacts
