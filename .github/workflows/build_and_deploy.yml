@@ -34,9 +34,8 @@ jobs:
 
     - name: Build
       run: npm run build
-      env: |
+      env:
         VITE_API_KEY: ABC123
-        CI: true
 
     - name: Upload artifacts
 #      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
