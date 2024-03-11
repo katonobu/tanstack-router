@@ -5,9 +5,14 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, feature/env_local]
   pull_request:
     branches: [ main ]
+
+env:
+  VITE_GOOGLE_SHEET_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
+  VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
+  VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
 
 jobs:
   # Build job
