@@ -10,7 +10,6 @@ on:
     branches: [ main ]
 
 env:
-  VITE_GOOGLE_SHEET_API_KEY: ${{ secrets.VITE_GOOGLE_SHEET_API_KEY }}
   VITE_MENTENANCE_SHEET_ID: ${{ secrets.VITE_MENTENANCE_SHEET_ID }}
   VITE_MENTENANCE_SHEET_NAME: ${{ secrets.VITE_MENTENANCE_SHEET_NAME }}
 
@@ -35,6 +34,7 @@ jobs:
     - name: Build
       run: npm run build
       env:
+        CI: true
         VITE_API_KEY: ABC123
         VITE_GOOGLE_SHEET_API_KEY: 12345678
 
