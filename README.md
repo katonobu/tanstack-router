@@ -2,6 +2,20 @@
 - [無人航空機の飛行日誌の取扱要領](https://www.mlit.go.jp/koku/content/001574394.pdf)
 - [リモート ID 機器等及びアプリケーションが備えるべき要件](https://www.mlit.go.jp/koku/content/001444589.pdf)
 
+## 課題
+- pdfの表示がうまくいくときと行かない時がある。
+  - 302で返ってくることがある。
+    - workerが取りに行くので、サーバーはキャッシュを使え、と言っている。
+  - workerを使わず、Uint8Arrayを表示するライブラリが良さそう。
+    - [ReactPdfが良さそう](https://react-pdf-viewer.dev/)
+      - [react-pdf-viewer/preview-a-pdf-file-from-an-array-of-bytes/LoadFromBytesExample.tsx](https://github.com/react-pdf-viewer/examples/blob/main/preview-a-pdf-file-from-an-array-of-bytes/LoadFromBytesExample.tsx)
+
+- Secretをうまく取り込めない。
+  - [.env ファイル](https://ja.vitejs.dev/guide/env-and-mode.html#env-files)
+    - VITE_ から始まる変数のみが Vite で処理されたコードに公開されます。
+    - env: のあとに複数行記載しても効く。
+    - 中身が空文字担っているので、参照しているsecretと設定しているsecretがズレているっぽい。
+
 ## 登場人物
 - グループ
 - ユーザー
