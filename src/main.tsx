@@ -10,9 +10,13 @@ import { auth } from './utils/auth'
 import { Spinner } from './components/Spinner'
 import { routeTree } from './routeTree.gen'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import {pdfjs} from "react-pdf";
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.js?url';
 //
 
 export const queryClient = new QueryClient()
+
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 const hashHistory = createHashHistory()
 
